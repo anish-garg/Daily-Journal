@@ -1,0 +1,16 @@
+<%- include("header") -%>
+    <img class="image" src="/images/home-bg.jpg" alt="blog">
+    <h1>Home</h1>
+    <p class="para">
+        <%= startingContent %>
+    </p>
+    <% blogs.forEach(function(blog){ %>
+        <h1>
+            <%= post.title %>
+        </h1>
+        <p>
+            <%= post.conetnt.substring(0,100) + "....." %> <a href="/blogs/<%=blogId %>">Read More</a>
+        </p>
+
+        <% }) %>
+            <%- include("footer") -%>
