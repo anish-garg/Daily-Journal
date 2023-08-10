@@ -31,11 +31,10 @@ const userSchema = new mongoose.Schema({
 const Blog = new mongoose.model("Blog", blogSchema)
 const Blogger = new mongoose.model("Blogger", userSchema);
 
-const blogs = [];
-
+let newBlog;
 app.get("/", (req, res) => {
   res.render("home", {
-    startingContent: homeStartingContent, blogs: blogs
+    startingContent: homeStartingContent
   })
 })
 app.get("/about", (req, res) => {
@@ -48,10 +47,8 @@ app.get("/compose", (req, res) => {
   res.render("compose");
 })
 
-var post;
-
 app.post("/compose", (req, res) => {
-  var post = new Blog({
+  const post = new Blog({
     title: req.body.title,
     content: req.body.postBody
   })
@@ -69,17 +66,18 @@ app.post("/compose", (req, res) => {
 
 })
 
-app.get("/blogs/:blogId", (req, res) => {
-  const requestedId = req.params.blogId
+app.get("/blogs", (req, res) => {
+  // const requestedId = req.params.blogId
+
   async function run() {
     try {
-      const newBlog = await Blog.findOne({ _id: requestedId }).then(function (err, post) {
-        res.render("blogs", {
-          requestedTtitle: post.title,
-          requestedContent: post.content
-        })
-      });
-    } catch (err) {
+      const newBlog = await Blog.find({ _id: { $exists: true } })
+      // console.log(newBlog)
+      res.render("blogs", {
+        newBlog: newBlog
+      })
+    }
+    catch (err) {
       console.log(err)
     }
   }
@@ -96,23 +94,29 @@ app.get("/login", (req, res) => {
 
 app.get("/signup", (req, res) => {
   res.render("signup")
-  //   var email_signup = req.body.email
-  //   var password_signup = req.body.pass
-  //   const blogger = new Blogger({
-  //     email: email_signup,
-  //     password: password_signup
-  //   })
+  const blogger = new Blogger({
+    email: req.body.email,
+    password: req.body.pass
+  })
 
-  //   async function run() {
-  //     try {
-  //       await blogger.save()
-  //     } catch (error) {
-  //       console.log(error)
-  //     }
-  //   }
+  async function run() {
+    try {
+      const newBlogger = blogger.save()
+      console.log(newBlogger);
+      res.redirect("/")
+    } catch (error) {
+      console.log(error)
+    }
+  }
 
-  //   run().catch((err) => console.log(err))
+  run().catch((err) => console.log(err))
 })
+
+
+
+
+
+
 
 
 

@@ -4,8 +4,8 @@
 }
 
 .navbar {
-    padding-top: 15px;
-    padding-bottom: 15px;
+    padding-top: 30px;
+    /* padding-bottom: 15px; */
     border: 0;
     border-radius: 0;
     margin-bottom: 0;
@@ -56,6 +56,9 @@
     margin-left: 20%;
     margin-top: 6px;
     background-color:#dddddd;
+    position: relative;
+    top: 2px;
+    right: 8%;
 }
 
 .signup{
@@ -68,5 +71,13 @@
     letter-spacing: 3px;
     margin-left: 10px;
     background-color:#dddddd;
+    position: relative;
+    bottom: 40px;
+    left: 20%;
+}
+
+#name{
+    position: relative;
+    right: 5px;
 }
 

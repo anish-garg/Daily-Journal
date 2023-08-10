@@ -1,9 +1,13 @@
 <%- include("header") -%>
-    <h1>
-        <%= requestedTitle %>
-    </h1>
-    <p>
-        <%= requestedContent %>
-    </p>
-    </body>
-    </html>
+    <% newBlog.forEach(function(item){ %>
+        <h1>
+            <%= item.title %>
+        </h1>
+        <p>
+            <%= item.content %>
+        </p>
+        <% }) %>
+                    </div>
+                    </body>
+
+                    </html>
