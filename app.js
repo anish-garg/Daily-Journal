@@ -109,7 +109,7 @@ app.post("/login", (req, res) => {
     try {
       const foundUser = await Blogger.findOne({ "email": email_login })
       if (foundUser.password === password_login) {
-        res.redirect("/profile")
+        res.redirect("/")
       } else {
         console.log("Invalid Credentials")
       }
@@ -130,7 +130,7 @@ app.post("/signup", (req, res) => {
     try {
       const newBlogger = await blogger.save()
       // console.log(newBlogger);
-      res.redirect("/profile")
+      res.redirect("/")
     } catch (error) {
       console.log(error)
     }
