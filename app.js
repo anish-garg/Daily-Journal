@@ -24,19 +24,20 @@ const blogSchema = new mongoose.Schema({
 })
 
 const userSchema = new mongoose.Schema({
+  name: String,
   email: String,
-  password: String
+  password: String,
 });
 
 const Blog = new mongoose.model("Blog", blogSchema)
 const Blogger = new mongoose.model("Blogger", userSchema);
 
-let newBlog;
 app.get("/", (req, res) => {
   res.render("home", {
     startingContent: homeStartingContent
   })
 })
+
 app.get("/about", (req, res) => {
   res.render("about", { AboutContent: aboutContent });
 })
@@ -84,26 +85,52 @@ app.get("/blogs", (req, res) => {
   run().catch((err) => console.log(err))
 })
 
+
+
 app.get("/login", (req, res) => {
   res.render("login")
-  // var email_login = req.body.email
-  // var password_login = req.body.pass
-  // console.log(email_login)
-  // console.log(password_login)
 })
 
 app.get("/signup", (req, res) => {
   res.render("signup")
+})
+
+// app.get("/profile", (req, res) => {
+//   res.render("profile", {
+//     name:req.body.name
+//   })
+// })
+
+app.post("/login", (req, res) => {
+  const email_login = req.body.email;
+  const password_login = req.body.pass;
+  // console.log(email_login + "------" + password_login)
+  async function run() {
+    try {
+      const foundUser = await Blogger.findOne({ "email": email_login })
+      if (foundUser.password === password_login) {
+        res.redirect("/profile")
+      } else {
+        console.log("Invalid Credentials")
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }
+  run().catch((err) => console.log(err))
+})
+
+app.post("/signup", (req, res) => {
   const blogger = new Blogger({
+    name: req.body.name,
     email: req.body.email,
     password: req.body.pass
   })
-
   async function run() {
     try {
-      const newBlogger = blogger.save()
-      console.log(newBlogger);
-      res.redirect("/")
+      const newBlogger = await blogger.save()
+      // console.log(newBlogger);
+      res.redirect("/profile")
     } catch (error) {
       console.log(error)
     }
