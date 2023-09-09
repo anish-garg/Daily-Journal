@@ -16,7 +16,7 @@ app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("public"));
 
-mongoose.connect("mongodb://127.0.0.1:27017/blogDB", { useNewUrlParser: true })
+mongoose.connect("mongodb+srv://anishgarg5914:6hM5dZNPWrdqf4p0@cluster0.pvmyfqh.mongodb.net/blogDB", { useNewUrlParser: true })
 
 const blogSchema = new mongoose.Schema({
   title: String,
